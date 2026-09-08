@@ -32,17 +32,10 @@
         
         h1 {
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
             font-size: 28px;
-        }
-        
-        .product-id {
-            color: #667eea;
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
         }
         
         .field {
@@ -50,7 +43,7 @@
         }
         
         .label {
-            color: #666;
+            color: #667eea;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -60,22 +53,18 @@
         
         .value {
             color: #333;
-            font-size: 16px;
-            line-height: 1.6;
-            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
             background: #f5f5f5;
             border-left: 4px solid #667eea;
             border-radius: 4px;
-        }
-        
-        .no-data {
-            color: #999;
-            font-style: italic;
+            min-height: 30px;
         }
         
         .footer {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 40px;
             padding-top: 20px;
             border-top: 1px solid #eee;
             color: #999;
@@ -85,26 +74,31 @@
 </head>
 <body>
     <div class="container">
-        <h1 id="product-pn">Product Number</h1>
+        <h1>Product Details</h1>
+        
+        <div class="field">
+            <div class="label">Product Number (PN)</div>
+            <div class="value" id="pn">-</div>
+        </div>
         
         <div class="field">
             <div class="label">Description</div>
-            <div class="value" id="product-description">No description provided</div>
+            <div class="value" id="description">-</div>
         </div>
         
         <div class="field">
             <div class="label">Width (W)</div>
-            <div class="value" id="product-width">No width provided</div>
+            <div class="value" id="width">-</div>
         </div>
         
         <div class="field">
-            <div class="label">Length</div>
-            <div class="value" id="product-length">No length provided</div>
+            <div class="label">Length (L)</div>
+            <div class="value" id="length">-</div>
         </div>
         
         <div class="field">
             <div class="label">Location</div>
-            <div class="value" id="product-location">No location provided</div>
+            <div class="value" id="location">-</div>
         </div>
         
         <div class="footer">
@@ -114,30 +108,19 @@
 
     <script>
         // Get URL parameters
-        function getParameter(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return decodeURIComponent(urlParams.get(param)) || '';
+        function getParam(name) {
+            const url = window.location.href;
+            const regex = new RegExp('[?&]' + name + '=([^&#]*)');
+            const results = regex.exec(url);
+            return results === null ? '' : decodeURIComponent(results[1]);
         }
         
-        // Populate the page with data from URL
-        const pn = getParameter('pn');
-        document.getElementById('product-pn').textContent = pn || 'Product Number';
-        
-        const description = getParameter('description');
-        document.getElementById('product-description').textContent = description || 'No description provided';
-        document.getElementById('product-description').className = description ? 'value' : 'value no-data';
-        
-        const width = getParameter('width');
-        document.getElementById('product-width').textContent = width || 'No width provided';
-        document.getElementById('product-width').className = width ? 'value' : 'value no-data';
-        
-        const length = getParameter('length');
-        document.getElementById('product-length').textContent = length || 'No length provided';
-        document.getElementById('product-length').className = length ? 'value' : 'value no-data';
-        
-        const location = getParameter('location');
-        document.getElementById('product-location').textContent = location || 'No location provided';
-        document.getElementById('product-location').className = location ? 'value' : 'value no-data';
+        // Set values from URL
+        document.getElementById('pn').innerText = getParam('pn') || '-';
+        document.getElementById('description').innerText = getParam('description') || '-';
+        document.getElementById('width').innerText = getParam('width') || '-';
+        document.getElementById('length').innerText = getParam('length') || '-';
+        document.getElementById('location').innerText = getParam('location') || '-';
     </script>
 </body>
 </html>
